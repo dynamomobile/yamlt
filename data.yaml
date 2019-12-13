@@ -1,0 +1,28 @@
+Dog:
+  type: object
+  plus: 3
+  columns:
+    age: int
+    name: string
+
+Cat:
+  type: object
+  plus: 4
+  columns:
+    age: int
+    name: string
+
+Volvo:
+  type: car
+  columns:
+    age: int
+    name: string
+
+vw:
+  type: object
+  plus: 35
+  columns:
+      age: int
+
+help: 19
+arg: type
