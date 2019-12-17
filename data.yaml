@@ -8,14 +8,16 @@ Dog:
 Cat:
   type: object
   plus: 4
+  name: Leo
   columns:
-    age: int
-    name: string
+    age: 'i"nt'
+    name: "str'ing"
 
 Volvo:
-  type: car
+  type: object
   columns:
-    age: int
+    age: 
+      type: int
     name: string
 
 vw:
@@ -24,5 +26,7 @@ vw:
   columns:
       age: int
 
+plus: " next "
 help: 19
-arg: type
+arg: name
+ajaj: Hej!
