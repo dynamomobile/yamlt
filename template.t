@@ -22,14 +22,14 @@ help(${Cat.${arg}})
 AAA ${^name} ${^path}
 BBB ${plus}
 CCC
-%%foreach:columns%%
+%%foreach:columns;indent:--%%
 aaa
 --> hej ${^name}.${^value}(${^path})
 --> hej ${^name}.${type}(${^path})
 bbb
 ccc ${.help}
 %%end%%
-
+DDD
 %%end%%
 /*----------*/
 %%type:object;indent:....%%

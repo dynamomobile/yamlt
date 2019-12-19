@@ -1,0 +1,20 @@
+DBEntry:
+  type: object
+  columns:
+    name: string
+    age: int
+
+Vehicle:
+  type: object
+  columns:
+    brand: string
+    model: string
+    wheels: int
+
+dart_type:
+  string: String
+  int: int
+
+sql_type:
+  string: TEXT
+  int: INTEGER
