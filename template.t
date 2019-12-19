@@ -45,9 +45,9 @@ ccc ${.help}
 
 XX: ${vw.columns.age} ${vw.columns.${.property}}
 
-new=[%%type:object;oneline;delimiter:, %%
+new = [ %%type:object;oneline;delimiter:, %%
 "${^name}"
 %%end%%
-];
+ ];
 
 END.
