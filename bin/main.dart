@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:yaml/yaml.dart';
 
 // --------------------------------------------------------------------------------
@@ -25,11 +28,13 @@ class Value {
 // --------------------------------------------------------------------------------
 
 class Environment {
-  Environment({this.parent, this.name});
+  Environment({this.parent, this.name, this.templateFile, this.yamlFile});
 
   final Environment parent;
   final Map<String, Value> values = {};
   final String name;
+  final String templateFile;
+  final String yamlFile;
 
   var _nextId = 1;
 
@@ -54,8 +59,17 @@ class Environment {
     }
   }
 
-  static Environment parse({Environment parent, YamlMap node, String name}) {
-    final env = Environment(parent: parent, name: name);
+  static Environment parse(
+      {Environment parent,
+      YamlMap node,
+      String name,
+      String templateFile,
+      String yamlFile}) {
+    final env = Environment(
+        parent: parent,
+        name: name,
+        templateFile: templateFile,
+        yamlFile: yamlFile);
     node.forEach((key, value) {
       if (value is YamlMap) {
         env.values[key] =
@@ -272,6 +286,16 @@ String expandLine(Environment env, String line) {
       } else if (path.first == '^id') {
         line = line.replaceRange(match.start, match.end, env.id.toString());
         repeat = true;
+      } else if (path.first == '^templateFile') {
+        line = line.replaceRange(match.start, match.end, env.root.templateFile);
+        repeat = true;
+      } else if (path.first == '^yamlFile') {
+        line = line.replaceRange(match.start, match.end, env.root.yamlFile);
+        repeat = true;
+      } else if (path.first == '^date') {
+        line = line.replaceRange(match.start, match.end,
+            DateFormat.yMMMd().add_jms().format(DateTime.now()));
+        repeat = true;
       } else {
         if (env.values[path.first] != null &&
             !env.values[path.first].isEnvironment) {
@@ -292,9 +316,12 @@ String expandLine(Environment env, String line) {
 void main(List<String> arguments) async {
   if (arguments.length > 1) {
     try {
+      await findSystemLocale();
+      await initializeDateFormatting();
       final yamlContent = await File(arguments[1]).readAsString();
       final doc = loadYaml(yamlContent);
-      final env = Environment.parse(node: doc);
+      final env = Environment.parse(
+          node: doc, templateFile: arguments[0], yamlFile: arguments[1]);
 
       final templateContent = await File(arguments[0]).readAsString();
       final sections = Section.parse(templateContent);

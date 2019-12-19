@@ -1,3 +1,8 @@
+// This file was generated with 'yamlt'
+// Datetime: ${^date}
+// Template: ${^templateFile}
+//     YAML: ${^yamlFile}
+
 import 'dart:async';
 import 'dart:io';
 
