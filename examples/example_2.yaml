@@ -1,0 +1,14 @@
+node_a:
+  type: object
+  column:
+    x: float
+    y: float
+    width: float
+    height: float
+
+node_b:
+  type: object
+  column:
+    id: int
+    name: string
+    happy: bool

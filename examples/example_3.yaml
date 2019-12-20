@@ -1,0 +1,30 @@
+color:
+    yellow: "0x00ffff"
+    blue:   "0x0000ff"
+    green:  "0x00ff00"
+    red:    "0xff0000"
+    gray:   "0x808080"
+    white:  "0xffffff"
+
+cars:
+    vw:
+        beetle: yellow
+    volvo:
+        "240": blue
+    saab:
+        "95": green
+    tesla:
+        s: red
+        "3": gray
+        x: white
+
+stickers:
+    type: object
+    material: plastic
+    shapes:
+        cirle:
+            color: red
+        square:
+            color: green
+        triangle:
+            color: blue

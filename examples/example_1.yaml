@@ -1,0 +1,11 @@
+node_1:
+    type: A
+    description: This is node 1
+
+node_2:
+    type: A
+    description: This is node 2
+
+node_3:
+    type: B
+    description: This is node 3
