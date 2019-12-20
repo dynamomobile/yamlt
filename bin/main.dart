@@ -318,6 +318,7 @@ void main(List<String> arguments) async {
     try {
       await findSystemLocale();
       await initializeDateFormatting();
+
       final yamlContent = await File(arguments[1]).readAsString();
       final doc = loadYaml(yamlContent);
       final env = Environment.parse(
@@ -325,9 +326,6 @@ void main(List<String> arguments) async {
 
       final templateContent = await File(arguments[0]).readAsString();
       final sections = Section.parse(templateContent);
-
-      // print(env);
-      // print(sections);
 
       dumpTemplate(env, sections);
     } catch (error) {
