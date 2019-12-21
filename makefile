@@ -1,32 +1,31 @@
 .SILENT:
 
-all: test
+all: test examples
+
+EXAMPLES=example_1 example_2 example_3
 
 TARGET=yamlt
 
 $(TARGET): bin/main.dart
+	echo "### Compile $@ ###"
 	dart2native $< -o $(TARGET)
 
 test: $(TARGET)
-	./$(TARGET) template.t data.yaml
-	./$(TARGET) db_template.t db_data.yaml
+	echo "### Run $@ ###"
+	./$(TARGET) template.t data.yaml > output.out
+	echo "Output: output.out"
+	./$(TARGET) db_template.t db_data.yaml > db_output.out
+	echo "Output: db_output.out"
 
-examples: example_1 example_2 example_3
+examples: $(EXAMPLES)
 
-example_1: $(TARGET)
+example_%: $(TARGET)
 	echo "### Running $@ ###"
-	$(TARGET) examples/$@.t examples/$@.yaml
-
-example_2: $(TARGET)
-	echo "### Running $@ ###"
-	$(TARGET) examples/$@.t examples/$@.yaml
-
-example_3: $(TARGET)
-	echo "### Running $@ ###"
-	$(TARGET) examples/$@.t examples/$@.yaml
+	./$(TARGET) examples/$@.t examples/$@.yaml > $@.out
+	echo "Output: $@.out"
 
 install: $(TARGET)
 	cp $(TARGET) /usr/local/bin/
 
 clean:
-	rm $(TARGET)
+	rm -v $(TARGET) *.out
