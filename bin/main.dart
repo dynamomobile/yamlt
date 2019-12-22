@@ -314,8 +314,8 @@ String expandLine(Environment env, String line) {
 // --------------------------------------------------------------------------------
 
 void main(List<String> arguments) async {
-  if (arguments.length > 1) {
-    try {
+  try {
+    if (arguments.length == 2) {
       await findSystemLocale();
       await initializeDateFormatting();
 
@@ -328,8 +328,10 @@ void main(List<String> arguments) async {
       final sections = Section.parse(templateContent);
 
       dumpTemplate(env, sections);
-    } catch (error) {
-      print('Error: $error');
+    } else {
+      throw FormatException('Need file arguments');
     }
+  } catch (error) {
+    print('Usage: yamlt <template> <yaml>');
   }
 }
