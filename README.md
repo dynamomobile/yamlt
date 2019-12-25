@@ -10,7 +10,7 @@ Features available in the template file.
 
 ### Example 1
 
-Use of `%%nn:vv%%` to select nodes that has property `nn` with the value `vv`. 
+Use of `%%nn:vv%%` to select nodes that has property `nn` with the value `vv`. End section with `%%end%%`.
 
 Also uses `${^name}` to get name of node and `${nn}` to get value of property `nn`.
 
@@ -51,7 +51,7 @@ End.
 
 ### Example 2
 
-Use of `%%foreach:nn%%` to repeat template part for each node under `nn`.
+Use of `%%foreach:nn%%` to repeat template part for each node under `nn`. End section with `%%end%%`.
 
 Also uses `${^value}` to get the value of the node being used if it has a value and not subnodes.
 
@@ -193,8 +193,8 @@ End.
 
 Other features:
 
-* `%%define:nn%%` Define macro
-* `%%macro:nn%%` Use macro
+* `%%define:nn%%` Define macro, end with `%%end%%`.
+* `%%macro:nn%%` Use macro (No section so no need for `%%end%%`)
 * `${^id}` insert unique id (int) for node
 * `${^date}` insert current datetime "Dec 20, 2019 10:46:03 AM"
 * `${^yamlFile}` insert name of yaml file
