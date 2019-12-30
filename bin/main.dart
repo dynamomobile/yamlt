@@ -59,6 +59,23 @@ class Environment {
     }
   }
 
+  static void _parseEntry(Environment env, String key, dynamic value) {
+      if (value is YamlMap) {
+        env.values[key] =
+            Value(env: Environment.parse(parent: env, node: value, name: key));
+      } else if (value is YamlList) {
+        final listEnv = Environment(parent: env, name: key);
+        var index = 0;
+        env.values[key] = Value(env: listEnv);
+        value.forEach((item) {
+          _parseEntry(listEnv, index.toString(), item);
+          index += 1;
+        });
+      } else {
+        env.values[key] = Value(string: value.toString());
+      }
+  }
+
   static Environment parse(
       {Environment parent,
       YamlMap node,
@@ -71,20 +88,7 @@ class Environment {
         templateFile: templateFile,
         yamlFile: yamlFile);
     node.forEach((key, value) {
-      if (value is YamlMap) {
-        env.values[key] =
-            Value(env: Environment.parse(parent: env, node: value, name: key));
-      } else if (value is YamlList) {
-        final listEnv = Environment(parent: env, name: key);
-        var index = 0;
-        env.values[key] = Value(env: listEnv);
-        value.forEach((item) {
-          listEnv.values[index.toString()] = Value(string: item.toString());
-          index += 1;
-        });
-      } else {
-        env.values[key] = Value(string: value.toString());
-      }
+      _parseEntry(env, key, value);
     });
     return env;
   }
